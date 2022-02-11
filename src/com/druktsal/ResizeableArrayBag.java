@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * implementation of basic bag data structure that uses a resizeable array
+ * TODO: implement methods union, intersection, difference
  * @param <T>: generically-typed
  */
 public class ResizeableArrayBag<T> implements BagInterface<T> {
