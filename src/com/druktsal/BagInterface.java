@@ -41,14 +41,14 @@ public interface BagInterface<T> {
 //    /**
 //     * returns bag containing the elements from both bag1 and bag2
 //     */
-//    public ResizeableArrayBag<T> union(ResizeableArrayBag<T> bag1, ResizeableArrayBag<T> bag2);
+//    public ResizeableArrayBag<T> union(ResizeableArrayBag<T> bag2);
 //    /**
 //     * returns bag containing the elements in bag1 that are also in bag2
 //     */
-//    public ResizeableArrayBag<T> intersection(ResizeableArrayBag<T> bag1, ResizeableArrayBag<T> bag2);
+//    public ResizeableArrayBag<T> intersection(ResizeableArrayBag<T> bag2);
 //    /**
 //     * returns bag containing the elements in bag1 that are not in bag2
 //     */
-//    public ResizeableArrayBag<T> difference(ResizeableArrayBag<T> bag1, ResizeableArrayBag<T> bag2);
+//    public ResizeableArrayBag<T> difference(ResizeableArrayBag<T> bag2);
 
 }

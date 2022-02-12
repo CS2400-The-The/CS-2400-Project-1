@@ -29,6 +29,10 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         bag = temp;
     }
 
+    public void setBag(T[] bag) {
+        this.bag = bag;
+    }
+
     /**
      * default constructor
      */
@@ -59,12 +63,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * @return true if bag is empty, false otherwise
      */
     @Override
-    public boolean isEmpty() {
-        if (count == 0)
-            return true;
-
-        return false;
-    }
+    public boolean isEmpty() { return count == 0; }
 
     /**
      * adds specified item to bag
@@ -81,20 +80,45 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return true;
     }
 
+    private int getIndexOf(T entry) {
+        int index = -1;
+        boolean found = false;
+        for (int i = 0; !found && (i < count); i++)
+        {
+            if (entry.equals(bag[i]))
+            {
+                found = true;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private T removeEntry(int index)
+    {
+        T entry = null;
+        if (!isEmpty() && (index >= 0)) {
+            entry = bag[index];
+            count--;
+            bag[index] = bag[count];
+            bag[count] = null;
+        }
+        return entry;
+    }
+
     /**
      * removes first entry from bag
      * @return the entry removed
      */
     @Override
     public T remove() {
-        if (isEmpty())
-            return null;
-
-        T element = bag[0];
-        bag[0] = null;
-        count--;
-        bag = toArray();
-        return element;
+        T entry = null;
+        if (count > 0) {
+            count--;
+            entry = bag[count];
+            bag[count] = null;
+        }
+        return entry;
     }
 
     /**
@@ -104,18 +128,9 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      */
     @Override
     public boolean remove(T anEntry) {
-        if (isEmpty())
-            return false;
-
-        for (int i=0; i<count; i++) {
-            if (bag[i] == anEntry) {
-                bag[i] = null;
-                count--;
-                bag = toArray();
-                return true;
-            }
-        }
-        return false;
+        int index = getIndexOf(anEntry);
+        T result = removeEntry(index);
+        return anEntry.equals(result);
     }
 
     /**
@@ -168,20 +183,10 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     public T[] toArray() {
         @SuppressWarnings("unchecked")
         T[] newBag = (T[]) new Object[count];
-        int j = 0;
-
-        for (int i=0; i<bag.length; i++) {
-            if (bag[i] == null) {
-                j = i;
-                break;
-            }
-            newBag[i] = bag[i];
+        for (int index = 0; index < count; index++)
+        {
+            newBag[index] = bag[index];
         }
-
-        for (int i=j, k=i+1; i<count; i++, k++) {
-            newBag[i] = bag[k];
-        }
-
         return newBag;
     }
 
