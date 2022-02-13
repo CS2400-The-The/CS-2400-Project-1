@@ -33,8 +33,6 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         this.bag = bag;
     }
 
-    public T[] getBag() { return this.bag; }
-
     public int getCount() { return this.count; }
 
     /**
@@ -218,7 +216,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     }
 
     public boolean bagEquals(ResizeableArrayBag bag2) {
-        T[] b2 = (T[]) bag2.getBag();
+        T[] b2 = (T[]) bag2.toArray();
         Arrays.sort(this.bag);
         Arrays.sort(b2);
         return Arrays.equals(this.bag, b2);
@@ -230,7 +228,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
 
         T[] bag1 = this.bag;
-        T[] bag2 = (T[]) b2.getBag();
+        T[] bag2 = (T[]) b2.toArray();
         ResizeableArrayBag result = new ResizeableArrayBag();
 
         for (int i=0; i<this.count; i++) {
