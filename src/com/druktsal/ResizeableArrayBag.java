@@ -12,7 +12,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     /**
      * instance variables
      */
-    private static final int INITIAL_CAPACITY = 25;
+    private static final int INITIAL_CAPACITY = 5;
 
     private T[] bag;
     private int count;
@@ -34,6 +34,8 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     }
 
     public T[] getBag() { return this.bag; }
+
+    public int getCount() { return this.count; }
 
     /**
      * default constructor
@@ -220,6 +222,30 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         Arrays.sort(this.bag);
         Arrays.sort(b2);
         return Arrays.equals(this.bag, b2);
+    }
+
+    /**
+     * returns a new bag containing the intersection of this bag and b2
+     */
+    public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
+
+        T[] bag1 = this.bag;
+        T[] bag2 = (T[]) b2.getBag();
+        ResizeableArrayBag result = new ResizeableArrayBag();
+
+        for (int i=0; i<this.count; i++) {
+
+            for (int j=0; j<b2.getCount() && i<this.count; j++) {
+                if (bag1[i] == bag2[j]) {
+                    result.add(bag1[i]);
+                    bag2[j] = null;
+                    i++;
+                    j=-1;
+                }
+            }
+        }
+        result.setBag(result.toArray());
+        return result;
     }
 
 }
