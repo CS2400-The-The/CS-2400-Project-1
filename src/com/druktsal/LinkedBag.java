@@ -1,5 +1,7 @@
 package com.druktsal;
 
+import java.util.Arrays;
+
 /**
  * implementation of basic bag data structure that uses a linked list structure
  * TODO: implement methods union, intersection, difference
@@ -137,4 +139,13 @@ public class LinkedBag<T> implements BagInterface<T> {
         }
         return arr;
     }
+
+    public boolean bagEquals(LinkedBag bag2) {
+        T[] b1 = (T[]) this.toArray();
+        T[] b2 = (T[]) bag2.toArray();
+        Arrays.sort(b1);
+        Arrays.sort(b2);
+        return Arrays.equals(b1, b2);
+    }
+
 }

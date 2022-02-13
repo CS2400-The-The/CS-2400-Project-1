@@ -33,6 +33,8 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         this.bag = bag;
     }
 
+    public T[] getBag() { return this.bag; }
+
     /**
      * default constructor
      */
@@ -211,6 +213,13 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         }
 
         return output;
+    }
+
+    public boolean bagEquals(ResizeableArrayBag bag2) {
+        T[] b2 = (T[]) bag2.getBag();
+        Arrays.sort(this.bag);
+        Arrays.sort(b2);
+        return Arrays.equals(this.bag, b2);
     }
 
 }
