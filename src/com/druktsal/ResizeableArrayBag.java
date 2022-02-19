@@ -223,13 +223,51 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     }
 
     /**
+     * returns a new bag containing the union of this bag and b2
+     * that is, the elements from both bags all together 
+     */
+    public ResizeableArrayBag union(ResizeableArrayBag b2) {
+        T[] bag1 = this.toArray();
+        T[] bag2 = (T[]) b2.toArray();
+        ResizeableArrayBag result = new ResizeableArrayBag();
+
+        // if one of the bags is empty, the union will be the non-empty bag's contents
+        if (bag1.length==0) {
+            result.setBag(bag2);
+            return result;
+        } else if (bag2.length==0) {
+            result.setBag(bag1);
+            return result;
+        }
+
+        for (int i=0; i<bag1.length; i++) {
+            result.add(bag1[i]);
+        }
+        for (int i=0; i<bag2.length; i++) {
+            result.add(bag2[i]);
+        }
+
+        result.setBag(result.toArray());
+        return result;
+    }
+
+    /**
      * returns a new bag containing the intersection of this bag and b2
+     * that is, the contents common to both bags
      */
     public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
 
-        T[] bag1 = this.bag;
+        T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
         ResizeableArrayBag result = new ResizeableArrayBag();
+
+        // if the bags are equal, the intersection will be either bag's contents
+        if (Arrays.equals(bag1, bag2))
+            return this;
+
+        // if one of the bags is empty, the intersection will be an empty bag
+        if (bag1.length==0 || bag2.length==0)
+            return result;
 
         for (int i=0; i<this.count; i++) {
 
@@ -240,6 +278,47 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
                     i++;
                     j=-1;
                 }
+            }
+        }
+
+        result.setBag(result.toArray());
+        return result;
+    }
+
+    /**
+     * returns a new bag containing the difference of this bag and b2
+     * that is, the elements in bag1 that are NOT also in bag2
+     * this is a non-symmetric difference which handles duplicates
+     */
+    public ResizeableArrayBag difference(ResizeableArrayBag b2) {
+        T[] bag1 = this.toArray();
+        T[] bag2 = (T[]) b2.toArray();
+        Arrays.sort(bag1);
+        Arrays.sort(bag2);
+
+        ResizeableArrayBag result = new ResizeableArrayBag();
+
+        // if the bags are equal, the difference will be an empty bag
+        if (Arrays.equals(bag1, bag2))
+            return result;
+
+        // if either bag is empty, the difference will be the first bag
+        if (bag1.length==0 || bag2.length==0) {
+            result.setBag(bag1);
+            return result;
+        }
+
+        for (int i = 0; i < bag1.length; i++) {
+            boolean match = false;
+            for (int j = 0; j < bag2.length; j++) {
+                if (bag1[i] == bag2[j]) {
+                    match = true;
+                    bag2[j] = null;
+                    break;
+                }
+            }
+            if (!match) {
+                result.add(bag1[i]);
             }
         }
         result.setBag(result.toArray());
