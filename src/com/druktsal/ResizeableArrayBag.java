@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * implementation of basic bag data structure that uses a resizeable array
- * TODO: implement methods union, intersection, difference
  * @param <T>: generically-typed
  */
 public class ResizeableArrayBag<T> implements BagInterface<T> {
@@ -29,9 +28,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         bag = temp;
     }
 
-    public void setBag(T[] bag) {
-        this.bag = bag;
-    }
+    public void setBag(T[] bag) { this.bag = bag; }
 
     public int getCount() { return this.count; }
 
@@ -224,19 +221,22 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
 
     /**
      * returns a new bag containing the union of this bag and b2
-     * that is, the elements from both bags all together 
+     * that is, the elements from both bags all together
      */
-    public ResizeableArrayBag union(ResizeableArrayBag b2) {
+    @Override
+    public ResizeableArrayBag<T> union(ResizeableArrayBag<T> b2) {
         T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
         ResizeableArrayBag result = new ResizeableArrayBag();
 
         // if one of the bags is empty, the union will be the non-empty bag's contents
-        if (bag1.length==0) {
+        if (this.isEmpty()) {
             result.setBag(bag2);
+            result.count = result.bag.length;
             return result;
-        } else if (bag2.length==0) {
+        } else if (b2.isEmpty()) {
             result.setBag(bag1);
+            result.count = result.bag.length;
             return result;
         }
 
@@ -255,6 +255,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * returns a new bag containing the intersection of this bag and b2
      * that is, the contents common to both bags
      */
+    @Override
     public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
 
         T[] bag1 = this.toArray();
@@ -262,11 +263,13 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         ResizeableArrayBag result = new ResizeableArrayBag();
 
         // if the bags are equal, the intersection will be either bag's contents
-        if (Arrays.equals(bag1, bag2))
-            return this;
+        if (Arrays.equals(bag1, bag2)) {
+            result.setBag(bag1);
+            result.count = result.bag.length;
+        }
 
         // if one of the bags is empty, the intersection will be an empty bag
-        if (bag1.length==0 || bag2.length==0)
+        if (this.isEmpty() || b2.isEmpty())
             return result;
 
         for (int i=0; i<this.count; i++) {
@@ -290,6 +293,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * that is, the elements in bag1 that are NOT also in bag2
      * this is a non-symmetric difference which handles duplicates
      */
+    @Override
     public ResizeableArrayBag difference(ResizeableArrayBag b2) {
         T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
@@ -303,8 +307,9 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
             return result;
 
         // if either bag is empty, the difference will be the first bag
-        if (bag1.length==0 || bag2.length==0) {
+        if (this.isEmpty() || b2.isEmpty()) {
             result.setBag(bag1);
+            result.count = result.bag.length;
             return result;
         }
 
