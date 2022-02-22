@@ -17,33 +17,41 @@ public class LinkedBag<T> implements BagInterface<T> {
         count = 0;
     }
 
-    private class Node
-    {
+    private class Node {
         private T data;
         private Node next;
 
-        Node(T dataPortion)
+        private Node(T dataPortion)
         {
             this(dataPortion, null);
         }
 
-        Node(T dataPortion, Node nextNode)
-        {
+        private Node(T dataPortion, Node nextNode) {
             data = dataPortion;
             next = nextNode;
         }
 
-        T getData() { return data; }
+        private T getData() { 
+            return data; 
+        }
 
-        void setData(T newData) { data = newData; }
+        private void setData(T newData) { 
+            data = newData; 
+        }
 
-        Node getNextNode() { return next; }
+        private Node getNextNode() { 
+            return next; 
+        }
 
-        void setNextNode(Node nextNode) { next = nextNode; }
-    }
+        private void setNextNode(Node nextNode) { 
+            next = nextNode; 
+        }
+    } //end private class Node
 
     @Override
-    public int getCurrentSize() { return count; }
+    public int getCurrentSize() { 
+        return count; 
+    }
 
     @Override
     public boolean isEmpty() {
@@ -61,8 +69,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         return true;
     }
 
-    private Node getReferenceTo(T anEntry)
-    {
+    private Node getReferenceTo(T anEntry) {
         Node current = head;
         while (current != null)
         {
@@ -105,7 +112,6 @@ public class LinkedBag<T> implements BagInterface<T> {
 
     @Override
     public int getFrequencyOf(T anEntry) {
-
         int freq=0, i=0;
         Node current = head;
         while ((i < count) && (current != null))
@@ -127,17 +133,34 @@ public class LinkedBag<T> implements BagInterface<T> {
 
     @Override
     public T[] toArray() {
-
         @SuppressWarnings("unchecked")
         T[] arr = (T[]) new Object[count];
         int i=0;
         Node current = head;
-        while ((i<count) && (current != null)) {
+        while ((i < count) && (current != null)) {
             arr[i] = current.data;
             i++;
             current = current.next;
         }
         return arr;
+    }
+
+    @Override
+    public String toString() {
+        String output = "";
+        if (isEmpty()) {
+            return "bag empty";
+        }
+
+        T[] contents = this.toArray();
+        for (int i = 0; i < contents.length; i++) {
+            if (i == contents.length - 1) {
+                output += contents[i] + "";
+                continue;
+            }
+            output += contents[i] + " , ";
+        }
+        return output;
     }
 
     public boolean bagEquals(LinkedBag bag2) {
@@ -147,5 +170,75 @@ public class LinkedBag<T> implements BagInterface<T> {
         Arrays.sort(b2);
         return Arrays.equals(b1, b2);
     }
+
+    /**
+     * @param bag2  The bag whose contents to subtract
+     * @return a new bag whose collection are the total added entries
+     * of both collections
+     */ 
+    public LinkedBag<T> union(LinkedBag<T> bag2) {
+
+        Node current = this.head;
+        LinkedBag<T> linkedUnion = new LinkedBag<T>();
+
+        while (current != null) {
+            linkedUnion.add(current.getData());
+            current = current.next;
+        }
+        current = bag2.head;
+        while (current != null) {
+            linkedUnion.add(current.getData());
+            current = current.next;
+        }
+        return linkedUnion;
+    } //end union
+
+    /**
+     * @param bag2  The bag whose contents to subtract
+     * @return a new bag whose collection are the entries left over after removing 
+     * the ones that occur in another bag
+     */ 
+    public LinkedBag<T> difference(LinkedBag<T> bag2) {
+
+        LinkedBag<T> copyBag1 = new LinkedBag<T>();
+        Node current = this.head;
+        while (current != null) {
+            copyBag1.add(current.getData());
+            current = current.next;
+        }
+        Node currentBag2 = bag2.head;
+        while (currentBag2 != null) {
+            if (copyBag1.contains(currentBag2.getData())) {
+                copyBag1.remove(currentBag2.getData());
+            }
+            currentBag2 = currentBag2.next;
+        }
+        return copyBag1;
+    } //end difference
+
+    /**
+     * @param bag2  The bag whose contents to subtract
+     * @return a new bag whose collection are the entries that occur 
+     * in both collections
+     */ 
+    public LinkedBag<T> intersection(LinkedBag<T> bag2) {
+
+        LinkedBag<T> linkedIntersection = new LinkedBag<T>();
+        LinkedBag<T> copyBag1 = new LinkedBag<T>();
+        Node current = this.head;
+        while (current != null) {
+            copyBag1.add(current.getData());
+            current = current.next;
+        }
+        current = bag2.head;
+        while (current != null) {
+            if (copyBag1.contains(current.getData())) {
+                linkedIntersection.add(current.getData());
+                copyBag1.remove(current.getData());
+            }
+            current = current.next;
+        }
+        return linkedIntersection;
+    } //end intersection
 
 }
