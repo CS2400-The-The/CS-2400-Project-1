@@ -23,7 +23,7 @@ class ResizeableArrayBagTest {
         expectedA.add(6);
         expectedA.add(8);
 
-        ResizeableArrayBag actualA = bagA1.union(bagA2);
+        BagInterface actualA = bagA1.union(bagA2);
         System.out.println("Bag1: " + bagA1);
         System.out.println("Bag2: " + bagA2);
         System.out.println("Expected: " + expectedA);
@@ -52,7 +52,7 @@ class ResizeableArrayBagTest {
         expectedB.add(7);
         expectedB.add(9);
 
-        ResizeableArrayBag actualB = bagB1.union(bagB2);
+        BagInterface actualB = bagB1.union(bagB2);
         System.out.println("Bag1: " + bagB1);
         System.out.println("Bag2: " + bagB2);
         System.out.println("Expected: " + expectedB);
@@ -78,7 +78,7 @@ class ResizeableArrayBagTest {
         expectedC.add(8);
 
 
-        ResizeableArrayBag actualC = bagC1.union(bagC2);
+        BagInterface actualC = bagC1.union(bagC2);
         System.out.println("Bag1: " + bagC1);
         System.out.println("Bag2: " + bagC2);
         System.out.println("Expected: " + expectedC);
@@ -99,7 +99,7 @@ class ResizeableArrayBagTest {
         bagA1.add(3);
         bagA1.add(5);
 
-        ResizeableArrayBag actualA = bagA1.intersection(bagA2);
+        BagInterface actualA = bagA1.intersection(bagA2);
         System.out.println("Bag1: " + bagA1);
         System.out.println("Bag2: " + bagA2);
         System.out.println("Expected: bag empty");
@@ -126,7 +126,7 @@ class ResizeableArrayBagTest {
         expectedB.add(2);
         expectedB.add(8);
 
-        ResizeableArrayBag actualB = bagB1.intersection(bagB2);
+        BagInterface actualB = bagB1.intersection(bagB2);
         System.out.println("Bag1: " + bagB1);
         System.out.println("Bag2: " + bagB2);
         System.out.println("Expected: " + expectedB);
@@ -151,7 +151,7 @@ class ResizeableArrayBagTest {
         expectedC.add(1);
         expectedC.add(8);
 
-        ResizeableArrayBag actualC = bagC1.intersection(bagC2);
+        BagInterface actualC = bagC1.intersection(bagC2);
         System.out.println("Bag1: " + bagC1);
         System.out.println("Bag2: " + bagC2);
         System.out.println("Expected: " + expectedC);
@@ -177,7 +177,7 @@ class ResizeableArrayBagTest {
         expectedA.add(3);
         expectedA.add(5);
 
-        ResizeableArrayBag actualA = bagA1.difference(bagA2);
+        BagInterface actualA = bagA1.difference(bagA2);
         System.out.println("Bag1: " + bagA1);
         System.out.println("Bag2: " + bagA2);
         System.out.println("Expected: " + expectedA);
@@ -202,7 +202,7 @@ class ResizeableArrayBagTest {
         expectedB.add(1);
         expectedB.add(6);
 
-        ResizeableArrayBag actualB = bagB1.difference(bagB2);
+        BagInterface actualB = bagB1.difference(bagB2);
         System.out.println("Bag1: " + bagB1);
         System.out.println("Bag2: " + bagB2);
         System.out.println("Expected: " + expectedB);
@@ -226,7 +226,7 @@ class ResizeableArrayBagTest {
         expectedC.add(2);
         expectedC.add(5);
 
-        ResizeableArrayBag actualC = bagC1.difference(bagC2);
+        BagInterface actualC = bagC1.difference(bagC2);
         System.out.println("Bag1: " + bagC1);
         System.out.println("Bag2: " + bagC2);
         System.out.println("Expected: " + expectedC);
@@ -243,7 +243,7 @@ class ResizeableArrayBagTest {
         bagD2.add(2);
         bagD2.add(1);
 
-        ResizeableArrayBag actualD = bagD1.difference(bagD2);
+        BagInterface actualD = bagD1.difference(bagD2);
         System.out.println("Bag1: " + bagD1);
         System.out.println("Bag2: " + bagD2);
         System.out.println("Expected: bag empty");
