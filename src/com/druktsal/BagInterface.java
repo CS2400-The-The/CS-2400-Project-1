@@ -34,21 +34,26 @@ public interface BagInterface<T> {
     public T[] toArray();
 
     /**
+     * returns true if the contents of this bag and bag2 are equal,
+     * returns false otherwise
+     */
+    public boolean bagEquals(BagInterface<T> bag2);
+    /**
      * TODO: the following are the methods which must be implemented for Project 1
      * note that the return type will be different for the linked bag
      */
 
-//    /**
-//     * returns bag containing the elements from both bag1 and bag2
-//     */
-//    public ResizeableArrayBag<T> union(ResizeableArrayBag<T> bag2);
-//    /**
-//     * returns bag containing the elements in bag1 that are also in bag2
-//     */
-//    public ResizeableArrayBag<T> intersection(ResizeableArrayBag<T> bag2);
-//    /**
-//     * returns bag containing the elements in bag1 that are not in bag2
-//     */
-//    public ResizeableArrayBag<T> difference(ResizeableArrayBag<T> bag2);
+    /**
+     * returns bag containing the elements from both bag1 and bag2
+     */
+    public BagInterface<T> union(BagInterface<T> bag2);
+    /**
+     * returns bag containing the elements in bag1 that are also in bag2
+     */
+    public BagInterface<T> intersection(BagInterface<T> bag2);
+    /**
+     * returns bag containing the elements in bag1 that are not in bag2
+     */
+    public BagInterface<T> difference(BagInterface<T> bag2);
 
 }

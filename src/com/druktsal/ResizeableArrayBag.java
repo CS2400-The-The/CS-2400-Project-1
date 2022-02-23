@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * implementation of basic bag data structure that uses a resizeable array
- * TODO: implement methods union, intersection, difference
  * @param <T>: generically-typed
  */
 public class ResizeableArrayBag<T> implements BagInterface<T> {
@@ -29,11 +28,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         bag = temp;
     }
 
-    public void setBag(T[] bag) {
-        this.bag = bag;
-    }
-
-    public int getCount() { return this.count; }
+    public void setBag(T[] bag) { this.bag = bag; }
 
     /**
      * default constructor
@@ -215,7 +210,8 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return output;
     }
 
-    public boolean bagEquals(ResizeableArrayBag bag2) {
+    @Override
+    public boolean bagEquals(BagInterface<T> bag2) {
         T[] b2 = (T[]) bag2.toArray();
         Arrays.sort(this.bag);
         Arrays.sort(b2);
@@ -223,23 +219,110 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
     }
 
     /**
-     * returns a new bag containing the intersection of this bag and b2
+     * returns a new bag containing the union of this bag and b2
+     * that is, the elements from both bags all together
      */
-    public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
-
-        T[] bag1 = this.bag;
+    @Override
+    public BagInterface<T> union(BagInterface<T> b2) {
+        T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
         ResizeableArrayBag result = new ResizeableArrayBag();
 
+        // if one of the bags is empty, the union will be the non-empty bag's contents
+        if (this.isEmpty()) {
+            result.setBag(bag2);
+            result.count = result.bag.length;
+            return result;
+        } else if (b2.isEmpty()) {
+            result.setBag(bag1);
+            result.count = result.bag.length;
+            return result;
+        }
+
+        for (int i=0; i<bag1.length; i++) {
+            result.add(bag1[i]);
+        }
+        for (int i=0; i<bag2.length; i++) {
+            result.add(bag2[i]);
+        }
+
+        result.setBag(result.toArray());
+        return result;
+    }
+
+    /**
+     * returns a new bag containing the intersection of this bag and b2
+     * that is, the contents common to both bags
+     */
+    @Override
+    public BagInterface<T> intersection(BagInterface<T> b2) {
+
+        T[] bag1 = this.toArray();
+        T[] bag2 = (T[]) b2.toArray();
+        ResizeableArrayBag result = new ResizeableArrayBag();
+
+        // if the bags are equal, the intersection will be either bag's contents
+        if (Arrays.equals(bag1, bag2)) {
+            result.setBag(bag1);
+            result.count = result.bag.length;
+        }
+
+        // if one of the bags is empty, the intersection will be an empty bag
+        if (this.isEmpty() || b2.isEmpty())
+            return result;
+
         for (int i=0; i<this.count; i++) {
 
-            for (int j=0; j<b2.getCount() && i<this.count; j++) {
+            for (int j=0; j<b2.getCurrentSize() && i<this.count; j++) {
                 if (bag1[i] == bag2[j]) {
                     result.add(bag1[i]);
                     bag2[j] = null;
                     i++;
                     j=-1;
                 }
+            }
+        }
+
+        result.setBag(result.toArray());
+        return result;
+    }
+
+    /**
+     * returns a new bag containing the difference of this bag and b2
+     * that is, the elements in bag1 that are NOT also in bag2
+     * this is a non-symmetric difference which handles duplicates
+     */
+    @Override
+    public BagInterface<T> difference(BagInterface<T> b2) {
+        T[] bag1 = this.toArray();
+        T[] bag2 = (T[]) b2.toArray();
+        Arrays.sort(bag1);
+        Arrays.sort(bag2);
+
+        ResizeableArrayBag result = new ResizeableArrayBag();
+
+        // if the bags are equal, the difference will be an empty bag
+        if (Arrays.equals(bag1, bag2))
+            return result;
+
+        // if either bag is empty, the difference will be the first bag
+        if (this.isEmpty() || b2.isEmpty()) {
+            result.setBag(bag1);
+            result.count = result.bag.length;
+            return result;
+        }
+
+        for (int i = 0; i < bag1.length; i++) {
+            boolean match = false;
+            for (int j = 0; j < bag2.length; j++) {
+                if (bag1[i] == bag2[j]) {
+                    match = true;
+                    bag2[j] = null;
+                    break;
+                }
+            }
+            if (!match) {
+                result.add(bag1[i]);
             }
         }
         result.setBag(result.toArray());
