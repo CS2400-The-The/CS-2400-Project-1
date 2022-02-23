@@ -1,10 +1,19 @@
 package com.druktsal;
 
-public class LinkedBagTest {
-    /**
-     * client program: runs tests for LinkedBag
-     */
-    public static <T> void main(String[] args) {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
+public class LinkedBagTest {
+
+    @Test
+    void union() {
+    }
+
+    @Test
+    void difference() {
+    }
+
+    @Test
+    void intersection() {
     }
 }
