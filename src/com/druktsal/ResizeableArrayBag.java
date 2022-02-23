@@ -30,8 +30,6 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
 
     public void setBag(T[] bag) { this.bag = bag; }
 
-    public int getCount() { return this.count; }
-
     /**
      * default constructor
      */
@@ -212,7 +210,8 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return output;
     }
 
-    public boolean bagEquals(ResizeableArrayBag bag2) {
+    @Override
+    public boolean bagEquals(BagInterface<T> bag2) {
         T[] b2 = (T[]) bag2.toArray();
         Arrays.sort(this.bag);
         Arrays.sort(b2);
@@ -224,7 +223,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * that is, the elements from both bags all together
      */
     @Override
-    public ResizeableArrayBag<T> union(ResizeableArrayBag<T> b2) {
+    public BagInterface<T> union(BagInterface<T> b2) {
         T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
         ResizeableArrayBag result = new ResizeableArrayBag();
@@ -256,7 +255,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * that is, the contents common to both bags
      */
     @Override
-    public ResizeableArrayBag intersection(ResizeableArrayBag b2) {
+    public BagInterface<T> intersection(BagInterface<T> b2) {
 
         T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
@@ -274,7 +273,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
 
         for (int i=0; i<this.count; i++) {
 
-            for (int j=0; j<b2.getCount() && i<this.count; j++) {
+            for (int j=0; j<b2.getCurrentSize() && i<this.count; j++) {
                 if (bag1[i] == bag2[j]) {
                     result.add(bag1[i]);
                     bag2[j] = null;
@@ -294,7 +293,7 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * this is a non-symmetric difference which handles duplicates
      */
     @Override
-    public ResizeableArrayBag difference(ResizeableArrayBag b2) {
+    public BagInterface<T> difference(BagInterface<T> b2) {
         T[] bag1 = this.toArray();
         T[] bag2 = (T[]) b2.toArray();
         Arrays.sort(bag1);
