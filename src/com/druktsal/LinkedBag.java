@@ -69,6 +69,11 @@ public class LinkedBag<T> implements BagInterface<T> {
         return true;
     }
 
+    /**
+     * Locates a given entry within this bag
+     * 
+     */
+
     private Node getReferenceTo(T anEntry) {
         Node current = head;
         while (current != null)
@@ -110,6 +115,10 @@ public class LinkedBag<T> implements BagInterface<T> {
         count = 0;
     }
 
+    /** Counts the number of times a given entry appears in this bag
+     * @param anEntry The entry to be counted
+     * @return The number of times anEntry appears in the bag
+     */
     @Override
     public int getFrequencyOf(T anEntry) {
         int freq=0, i=0;
@@ -163,7 +172,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         return output;
     }
 
-    public boolean bagEquals(LinkedBag bag2) {
+    public boolean bagEquals(BagInterface<T> bag2) {
         T[] b1 = (T[]) this.toArray();
         T[] b2 = (T[]) bag2.toArray();
         Arrays.sort(b1);
@@ -176,16 +185,21 @@ public class LinkedBag<T> implements BagInterface<T> {
      * @return a new bag whose collection are the total added entries
      * of both collections
      */ 
-    public LinkedBag<T> union(LinkedBag<T> bag2) {
+    public BagInterface<T> union(BagInterface<T> bag2) {
+        T[] contentsOfBag2 = bag2.toArray();
+        LinkedBag<T> copyBag2 = new LinkedBag<T>();
+        for (int i = 0; i < contentsOfBag2.length; i++) {
+            copyBag2.add(contentsOfBag2[i]);
+        }
 
         Node current = this.head;
-        LinkedBag<T> linkedUnion = new LinkedBag<T>();
+        BagInterface<T> linkedUnion = new LinkedBag<T>();
 
         while (current != null) {
             linkedUnion.add(current.getData());
             current = current.next;
         }
-        current = bag2.head;
+        current = copyBag2.head;
         while (current != null) {
             linkedUnion.add(current.getData());
             current = current.next;
@@ -198,15 +212,21 @@ public class LinkedBag<T> implements BagInterface<T> {
      * @return a new bag whose collection are the entries left over after removing 
      * the ones that occur in another bag
      */ 
-    public LinkedBag<T> difference(LinkedBag<T> bag2) {
+    public BagInterface<T> difference(BagInterface<T> bag2) {
+        T[] contentsOfBag2 = bag2.toArray();
+        LinkedBag<T> copyBag2 = new LinkedBag<T>();
+        for (int i = 0; i < contentsOfBag2.length; i++) {
+            copyBag2.add(contentsOfBag2[i]);
+        }
 
-        LinkedBag<T> copyBag1 = new LinkedBag<T>();
+        BagInterface<T> copyBag1 = new LinkedBag<T>();
         Node current = this.head;
         while (current != null) {
             copyBag1.add(current.getData());
             current = current.next;
         }
-        Node currentBag2 = bag2.head;
+
+        Node currentBag2 = copyBag2.head;
         while (currentBag2 != null) {
             if (copyBag1.contains(currentBag2.getData())) {
                 copyBag1.remove(currentBag2.getData());
@@ -220,25 +240,33 @@ public class LinkedBag<T> implements BagInterface<T> {
      * @param bag2  The bag whose contents to subtract
      * @return a new bag whose collection are the entries that occur 
      * in both collections
-     */ 
-    public LinkedBag<T> intersection(LinkedBag<T> bag2) {
+    */ 
+    public BagInterface<T> intersection(BagInterface<T> bag2) {
+    
+        BagInterface<T> linkedIntersection = new LinkedBag<T>();
+        BagInterface<T> copyBag1 = new LinkedBag<T>();
+        LinkedBag<T> copyBag2 = new LinkedBag<T>();  
+        T[] contentsBag2 = bag2.toArray();         //creates a method with contents of bag2 in it
+        for (int i = 0; i < bag2.getCurrentSize(); i++) {
+            copyBag2.add(contentsBag2[i]);
+        }
 
-        LinkedBag<T> linkedIntersection = new LinkedBag<T>();
-        LinkedBag<T> copyBag1 = new LinkedBag<T>();
         Node current = this.head;
         while (current != null) {
             copyBag1.add(current.getData());
             current = current.next;
         }
-        current = bag2.head;
+        current = copyBag2.head;
         while (current != null) {
             if (copyBag1.contains(current.getData())) {
                 linkedIntersection.add(current.getData());
                 copyBag1.remove(current.getData());
             }
             current = current.next;
-        }
+        } 
         return linkedIntersection;
     } //end intersection
+
+    
 
 }
