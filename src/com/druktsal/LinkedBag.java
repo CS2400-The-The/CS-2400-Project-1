@@ -55,13 +55,16 @@ public class LinkedBag<T> implements BagInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        if (head == null)
+        if (head == null) 
             return true;
         return false;
     }
 
     @Override
     public boolean add(T newEntry) {
+        if (newEntry == null) {
+            return false;
+        }
         Node newNode = new Node(newEntry);
         newNode.setNextNode(head);
         head = newNode;
@@ -160,7 +163,6 @@ public class LinkedBag<T> implements BagInterface<T> {
         if (isEmpty()) {
             return "bag empty";
         }
-
         T[] contents = this.toArray();
         for (int i = 0; i < contents.length; i++) {
             if (i == contents.length - 1) {
@@ -185,7 +187,8 @@ public class LinkedBag<T> implements BagInterface<T> {
      * @return a new bag whose collection are the total added entries
      * of both collections
      */ 
-    public BagInterface<T> union(BagInterface<T> bag2) {
+    public BagInterface<T> union(BagInterface<T> bag2) throws NullPointerException {
+        try {
         T[] contentsOfBag2 = bag2.toArray();
         LinkedBag<T> copyBag2 = new LinkedBag<T>();
         for (int i = 0; i < contentsOfBag2.length; i++) {
@@ -194,7 +197,7 @@ public class LinkedBag<T> implements BagInterface<T> {
 
         Node current = this.head;
         BagInterface<T> linkedUnion = new LinkedBag<T>();
-
+    
         while (current != null) {
             linkedUnion.add(current.getData());
             current = current.next;
@@ -205,6 +208,11 @@ public class LinkedBag<T> implements BagInterface<T> {
             current = current.next;
         }
         return linkedUnion;
+        } catch (Exception e) {
+            System.out.println("passed in a null bag");
+            LinkedBag<T> nullBag = null;
+            return nullBag;
+        }
     } //end union
 
     /**
@@ -212,7 +220,8 @@ public class LinkedBag<T> implements BagInterface<T> {
      * @return a new bag whose collection are the entries left over after removing 
      * the ones that occur in another bag
      */ 
-    public BagInterface<T> difference(BagInterface<T> bag2) {
+    public BagInterface<T> difference(BagInterface<T> bag2) throws NullPointerException {
+        try {
         T[] contentsOfBag2 = bag2.toArray();
         LinkedBag<T> copyBag2 = new LinkedBag<T>();
         for (int i = 0; i < contentsOfBag2.length; i++) {
@@ -234,6 +243,11 @@ public class LinkedBag<T> implements BagInterface<T> {
             currentBag2 = currentBag2.next;
         }
         return copyBag1;
+        } catch (Exception e) {
+            System.out.println("passed in a null bag");
+            LinkedBag<T> nullBag = null;
+            return nullBag;
+        }
     } //end difference
 
     /**
