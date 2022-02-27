@@ -12,7 +12,6 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
      * instance variables
      */
     private static final int INITIAL_CAPACITY = 5;
-
     private T[] bag;
     private int count;
 
@@ -28,6 +27,9 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         bag = temp;
     }
 
+    /**
+     * setter for bag array
+     */
     public void setBag(T[] bag) { this.bag = bag; }
 
     /**
@@ -77,6 +79,10 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return true;
     }
 
+    /**
+     * returns integer index of entry in bag if found,
+     * returns -1 if entry not found
+     */
     private int getIndexOf(T entry) {
         int index = -1;
         boolean found = false;
@@ -91,6 +97,9 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return index;
     }
 
+    /**
+     * removes entry at index from bag
+     */
     private T removeEntry(int index)
     {
         T entry = null;
@@ -210,6 +219,10 @@ public class ResizeableArrayBag<T> implements BagInterface<T> {
         return output;
     }
 
+    /**
+     * returns true if the contents of this bag and that of
+     * bag2 are equal, returns false otherwise
+     */
     @Override
     public boolean bagEquals(BagInterface<T> bag2) {
         T[] b2 = (T[]) bag2.toArray();

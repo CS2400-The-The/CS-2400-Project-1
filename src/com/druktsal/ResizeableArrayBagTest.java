@@ -1,10 +1,17 @@
 package com.druktsal;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * unit tests of union, intersection, and difference methods for array-based bag
+ */
 class ResizeableArrayBagTest {
 
-    @org.junit.jupiter.api.Test
+    /**
+     * test union method for ResizeableArrayBag
+     */
+    @Test
     void union() {
         System.out.println("Testing bag union...");
 
@@ -77,7 +84,6 @@ class ResizeableArrayBagTest {
         expectedC.add(7);
         expectedC.add(8);
 
-
         BagInterface actualC = bagC1.union(bagC2);
         System.out.println("Bag1: " + bagC1);
         System.out.println("Bag2: " + bagC2);
@@ -85,9 +91,25 @@ class ResizeableArrayBagTest {
         System.out.println("Actual: " + actualC);
         assertTrue(actualC.bagEquals(expectedC));
         System.out.println();
+
+        System.out.println("Test D: one bag is null");
+        BagInterface<Integer> bagD1 = new ResizeableArrayBag<>();
+        BagInterface<Integer> bagD2 = null;
+
+        bagD1.add(1);
+        bagD1.add(2);
+
+        System.out.println("Bag1: " + bagD1);
+        System.out.println("Bag2: null");
+        var actualD = assertThrows(NullPointerException.class, () -> {bagD1.union(bagD2);});
+        System.out.println("Method should throw an exception.\n" + "Result: " + actualD);
+        System.out.println();
     }
 
-    @org.junit.jupiter.api.Test
+    /**
+     * test intersection method for ResizeableArrayBag
+     */
+    @Test
     void intersection() {
         System.out.println("Testing bag intersection...");
 
@@ -157,10 +179,25 @@ class ResizeableArrayBagTest {
         System.out.println("Expected: " + expectedC);
         System.out.println("Actual: " + actualC);
         assertTrue(actualC.bagEquals(expectedC));
+
+        System.out.println("Test D: one bag is null");
+        BagInterface<Integer> bagD1 = new ResizeableArrayBag<>();
+        BagInterface<Integer> bagD2 = null;
+
+        bagD1.add(1);
+        bagD1.add(2);
+
+        System.out.println("Bag1: " + bagD1);
+        System.out.println("Bag2: null");
+        var actualD = assertThrows(NullPointerException.class, () -> {bagD1.union(bagD2);});
+        System.out.println("Method should throw an exception.\n" + "Result: " + actualD);
         System.out.println();
     }
 
-    @org.junit.jupiter.api.Test
+    /**
+     * test difference method for ResizeableArrayBag
+     */
+    @Test
     void difference() {
         System.out.println("Testing bag difference...");
 
@@ -249,5 +286,17 @@ class ResizeableArrayBagTest {
         System.out.println("Expected: bag empty");
         System.out.println("Actual: " + actualD);
         assertTrue(actualD.isEmpty());
+
+        System.out.println("Test E: one bag is null");
+        BagInterface<Integer> bagE1 = new ResizeableArrayBag<>();
+        BagInterface<Integer> bagE2 = null;
+
+        bagE1.add(1);
+        bagE1.add(2);
+
+        System.out.println("Bag1: " + bagE1);
+        System.out.println("Bag2: null");
+        var actualE = assertThrows(NullPointerException.class, () -> {bagE1.union(bagE2);});
+        System.out.println("Method should throw an exception.\n" + "Result: " + actualD);
     }
 }

@@ -1,5 +1,8 @@
 package com.druktsal;
 
+/**
+ * public generic interface for the Bag ADT
+ */
 public interface BagInterface<T> {
 
     /** Gets the current number of entries in this bag.

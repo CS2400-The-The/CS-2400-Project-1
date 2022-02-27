@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 /**
  * implementation of basic bag data structure that uses a linked list structure
- * TODO: implement methods union, intersection, difference
- * @param <T>
+ * @param <T> generically-typed
  */
 public class LinkedBag<T> implements BagInterface<T> {
 
@@ -23,20 +22,35 @@ public class LinkedBag<T> implements BagInterface<T> {
         count = 0;
     }
 
+    /**
+     * inner class for linked list node
+     */
     private class Node {
+        /**
+         * Node instance variables
+         */
         private T data;
         private Node next;
 
+        /**
+         * Node constructor, data only
+         */
         private Node(T dataPortion)
         {
             this(dataPortion, null);
         }
 
+        /**
+         * Node constructor, includes nextNode
+         */
         private Node(T dataPortion, Node nextNode) {
             data = dataPortion;
             next = nextNode;
         }
 
+        /**
+         * Node getters and setters
+         */
         private T getData() { 
             return data; 
         }
@@ -52,7 +66,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         private void setNextNode(Node nextNode) { 
             next = nextNode; 
         }
-    } //end private class Node
+    }
 
     /**
      * gets number of entries in bag
@@ -95,7 +109,6 @@ public class LinkedBag<T> implements BagInterface<T> {
      * Locates a given entry within this bag
      * 
      */
-
     private Node getReferenceTo(T anEntry) {
         Node current = head;
         while (current != null)
@@ -108,6 +121,10 @@ public class LinkedBag<T> implements BagInterface<T> {
         return null;
     }
 
+    /**
+     * removes first entry from bag
+     * @return the item removed (if present, null otherwise)
+     */
     @Override
     public T remove() {
         T result = null;
@@ -119,6 +136,11 @@ public class LinkedBag<T> implements BagInterface<T> {
         return result;
     }
 
+    /**
+     * removes specified entry from bag
+     * @param anEntry  The entry to be removed.
+     * @return true if remove successful, false otherwise
+     */
     @Override
     public boolean remove(T anEntry) {
         boolean result = false;
@@ -131,6 +153,9 @@ public class LinkedBag<T> implements BagInterface<T> {
         return result;
     }
 
+    /**
+     * removes all nodes from linked list
+     */
     @Override
     public void clear() {
         head = null;
@@ -155,6 +180,11 @@ public class LinkedBag<T> implements BagInterface<T> {
         return freq;
     }
 
+    /**
+     * checks if bag contains given entry
+     * @param anEntry  The entry to find.
+     * @return true if entry is in bag, false otherwise
+     */
     @Override
     public boolean contains(T anEntry) {
         if (getReferenceTo(anEntry) == null)
@@ -162,6 +192,10 @@ public class LinkedBag<T> implements BagInterface<T> {
         return true;
     }
 
+    /**
+     * copies this bags contents to a newly-allocated array
+     * @return the (generically-typed) array
+     */
     @Override
     public T[] toArray() {
         @SuppressWarnings("unchecked")
@@ -176,6 +210,9 @@ public class LinkedBag<T> implements BagInterface<T> {
         return arr;
     }
 
+    /**
+     * returns formatted string representation of bag's contents
+     */
     @Override
     public String toString() {
         String output = "";
@@ -193,6 +230,11 @@ public class LinkedBag<T> implements BagInterface<T> {
         return output;
     }
 
+    /**
+     * checks if this bag and bag2 are equal
+     * @param bag2 bag to be compared
+     * @return true if the bags are equal, false otherwise
+     */
     public boolean bagEquals(BagInterface<T> bag2) {
         T[] b1 = (T[]) this.toArray();
         T[] b2 = (T[]) bag2.toArray();

@@ -3,8 +3,14 @@ package com.druktsal;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * unit tests of union, intersection, and difference methods for linked list-based bag
+ */
 public class LinkedBagTest {
 
+    /**
+     * test union method for LinkedBag
+     */
     @Test
     void union() {
         System.out.println("Testing LinkedBag union...");
@@ -216,7 +222,9 @@ public class LinkedBagTest {
     //end Test H
     }
 
-
+    /**
+     * test difference method for LinkedBag
+     */
     @Test
     void difference() {
         System.out.println("Testing LinkedBag difference...");
@@ -391,7 +399,9 @@ public class LinkedBagTest {
     //end Test H
     }
 
-
+    /**
+     * test intersection method for LinkedBag
+     */
     @Test
     void intersection() {
         System.out.println("Testing LinkedBag intersection...");
