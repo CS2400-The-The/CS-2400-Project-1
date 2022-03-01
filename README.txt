@@ -20,10 +20,9 @@ Contributions
     Wrote BagDriver client program.
     Tabulated/explained Big Oh complexity for LinkedBag.
 
-Extra Features: use of Junit5 unit testing framework.
+Extra Features: Use of Junit5 unit testing framework.
+                Hosting Javadocs on GitHub Pages.
 
-TODO: get clips from team, edit together, and upload
-Video: [insert YouTube link here]
+Video: https://youtu.be/BEytsfaelrk
 
-TODO: generate javadocs
-Javadoc: [insert Javadoc link]
+Javadocs: https://druktsal.github.io/CS-2400-Project-1/
